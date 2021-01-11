@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RecruitmentPortal</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="nav_bar">
+      <div class="nav_bar_title"> Recruitement Portal</div>
+      <div class="nav_bar_menu">
+        <ul>
+
+          <% if user_signed_in? %>
+            <li> <%= link_to 'New Job Post', new_job_post_path %> </li>
+            <li> <%= link_to 'Logout', destroy_user_session_path, method: :delete %> </li>
+          <% else %>
+            <li> <a href="/users/sign_in"> Login </a> </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="clr"></div>
+    </div>
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Job Posts</h1> 
+
+<div class="job_posts_container">
+  <% @job_posts.each do |job_post| %>
+    <div class="job_post_container">
+      <div class="job_title">
+        <%= job_post.title %>
+      </div>
+      <div class="job_description">
+        <%= job_post.description.truncate(250, separator: '...') %>
+      </div>
+      <div class="job_menu">
+        
+        <% if user_signed_in? %>
+          <%= link_to 'Edit', edit_job_post_path(job_post) %> |
+          <%= link_to 'Destroy', job_post, method: :delete, data: { confirm: 'Are you sure?' } %> | 
+        <% end %>
+        <%= link_to 'Show', job_post %>
+
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
