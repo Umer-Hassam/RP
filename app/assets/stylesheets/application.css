@@ -45,3 +45,40 @@ body {
 	background-color: #dddddd;
 	text-decoration: none
 }
+
+form {
+	background: #EEE;
+    padding: 20px;
+    width: 80%;
+    margin: 0 auto;
+}
+form .field {
+    padding: 5px;
+    text-align: center;
+}
+form .field input {
+    width: 80%;
+    height: 30px;
+    background: #FFF;
+    border: 1px solid #899;
+    border-radius: 5px;
+}
+form .field label {
+	    font-weight: bold;
+    text-align: left;
+    padding-left: 10%;
+}
+form .actions {
+    padding: 5px;
+    text-align: center;
+}
+form .actions input {
+        width: 60%;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    background: #2c2;
+    height: 35px;
+    border: 0px solid #899;
+    border-radius: 5px;
+}

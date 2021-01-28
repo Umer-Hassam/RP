@@ -1,6 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Job Posts</h1> 
+<% if user_signed_in? %>
+Profile Exists: <%= current_user.profile != nil %>
+<% end %>
 
 <div class="job_posts_container">
   <% @job_posts.each do |job_post| %>

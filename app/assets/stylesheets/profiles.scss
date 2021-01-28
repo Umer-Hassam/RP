@@ -1,3 +1,48 @@
 // Place all the styles related to the Profiles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.admin_profile_container {
+	
+}
+.admin_profile_menu {
+	float: left;
+}
+.admin_profile_menu ul {
+	
+}
+.admin_profile_menu li {
+	text-decoration: none;
+    display: block;
+    padding: 5px 10px;
+    background: #EEE;
+    margin: 5px 10px;
+}
+.admin_profile_menu li a {
+	text-decoration:none;
+}
+.admin_profile_menu li a:hover {
+	background-color:#EEE;
+	color:#AAF;
+}
+.admin_profile_content{
+	//float: left;
+	padding: 10px;
+	overflow:hidden;
+}
+.admin_profile_content_heading{
+	padding: 5px 0px 5px 30px;
+    background: #EEF;
+    font-weight: bold;
+    font-size: 16px;
+}
+.admin_profile_content_value {
+	padding: 10px
+}
+.admin_profile_vendor_row_top{
+	font-weight:bold;
+}
+.admin_profile_vendor_col{
+	float:left;
+	width:200px;
+}

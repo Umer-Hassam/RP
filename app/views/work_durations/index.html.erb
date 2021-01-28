@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Work Durations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hours</th>
+      <th>Work day</th>
+      <th>Employee</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @work_durations.each do |work_duration| %>
+      <tr>
+        <td><%= work_duration.hours %></td>
+        <td><%= work_duration.work_day %></td>
+        <td><%= work_duration.employee_id %></td>
+        <td><%= link_to 'Show', work_duration %></td>
+        <td><%= link_to 'Edit', edit_work_duration_path(work_duration) %></td>
+        <td><%= link_to 'Destroy', work_duration, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Work Duration', new_work_duration_path %>

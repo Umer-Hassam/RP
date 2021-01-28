@@ -1,0 +1,32 @@
+<%= form_with(model: work_duration, local: true) do |form| %>
+  <% if work_duration.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(work_duration.errors.count, "error") %> prohibited this work_duration from being saved:</h2>
+
+      <ul>
+        <% work_duration.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :hours %>
+    <%= form.number_field :hours %>
+  </div>
+
+  <div class="field">
+    <%= form.label :work_day %>
+    <% date = DateTime.parse(params[:date]) %>
+    <%= form.date_select(:work_day, selected: date) %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :employee_id, {:value => params[:eid]} %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

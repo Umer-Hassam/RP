@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 7) do
+ActiveRecord::Schema.define(version: 9) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "employees", force: :cascade do |t|
+    t.integer "rate"
+    t.integer "profile_id"
+    t.integer "vendor_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "job_application_users", force: :cascade do |t|
     t.integer "job_application_id"
@@ -34,6 +45,7 @@ ActiveRecord::Schema.define(version: 7) do
 
   create_table "profiles", force: :cascade do |t|
     t.string "full_name"
+    t.integer "user_type"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -59,6 +71,15 @@ ActiveRecord::Schema.define(version: 7) do
 
   create_table "vendors", force: :cascade do |t|
     t.string "name"
+    t.integer "profile_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "work_durations", force: :cascade do |t|
+    t.integer "hours"
+    t.date "work_day"
+    t.integer "employee_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
