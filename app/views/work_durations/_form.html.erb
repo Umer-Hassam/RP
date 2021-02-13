@@ -1,4 +1,4 @@
-<%= form_with(model: work_duration, local: true) do |form| %>
+<%= form_with(model: work_duration, local: true, html: {class: "col100"}) do |form| %>
   <% if work_duration.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(work_duration.errors.count, "error") %> prohibited this work_duration from being saved:</h2>
