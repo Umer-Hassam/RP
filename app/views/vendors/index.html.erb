@@ -1,3 +1,100 @@
+
+<div class="heading"> <%= current_user.profile.role == "Admin" ? "Manage Vendors" : "View Vendors" %> </div>
+<%if current_user.profile.role == "Admin" %>
+  <div class="">
+    <%= link_to "New Vendor", new_profile_url(role:"vendor"), {:class => "button_link"} %>
+  </div>
+<% end %>
+
+<div class="section">
+
+  <div class="row top">
+    <div class="col col10">
+      #
+    </div>
+    <div class="col col25">
+      Name
+    </div>
+    <div class="col col20">
+      <% if current_user.is_employee? %>
+        Rate
+      <% else %>
+        Employees
+      <% end %>
+    </div>
+    <div class="col col20">
+      Weekly Hours
+    </div>
+    <div class="col col20">
+      Weekly Turnover
+    </div>
+    <div style="clear:both"></div>
+  </div>
+
+  
+  <% total_hours = 0 %>
+  <% total_turnover = 0 %>
+  <% @vendors.each_with_index do |vendor, index| %>
+    <div class="row">
+      <div class="col col10">
+        <%= index %>
+      </div>
+      <div class="col col25">
+        <%= link_to vendor.profile.full_name, vendor %>
+      </div>
+      <div class="col col20">
+        <% if current_user.is_employee? %>
+          <%= current_user.profile.employee.projects.where(:vendor_id => vendor.id).first.rate %>
+        <% else %>
+          <%= vendor.employees.count %>
+        <% end %>
+      </div>
+      <div class="col col20">
+        <% if current_user.is_employee? %>
+          <%= hours = vendor.projects.where(:employee_id => current_user.profile.employee.id).map { |p| p.total_weekly_hours_worked }.join(',').to_i %>
+          <% total_hours += hours.to_i %>
+        <% else %>
+          <%= hours = vendor.projects.map { |p| p.total_weekly_hours_worked }.join(',').to_i %>
+          <% total_hours += hours.to_i %>
+        <% end %>
+      </div>
+      <div class="col col20">
+        <% if current_user.is_employee? %>
+          <%= to = vendor.projects.where(:employee_id => current_user.profile.employee.id).map { |p| p.total_weekly_hours_worked * p.rate }.join(',').to_i %>$
+          <% total_turnover += to.to_i %>
+        <% else %>
+          <%= to = vendor.projects.map { |p| p.weekly_earnings }.reduce(&:+) %>$
+          <% total_turnover += to.to_i %>
+        <% end %>
+
+        
+      </div>
+      <div style="clear:both"></div>
+    </div>
+  <% end %>
+
+  <div class="row bottom">
+    <div class="col col10">
+      
+    </div>
+    <div class="col col25">
+      
+    </div>
+    <div class="col col20">
+      
+    </div>
+    <div class="col col20">
+      146
+    </div>
+    <div class="col col20">
+      <%= total_turnover %>$
+    </div>
+    <div style="clear:both"></div>
+  </div>
+</div>
+
+<% if false %>
+
 <p id="notice"><%= notice %></p>
 
 <h1>Vendors</h1>
@@ -25,3 +122,5 @@
 <br>
 
 <%= link_to 'New Vendor', new_vendor_path %>
+
+<% end %>

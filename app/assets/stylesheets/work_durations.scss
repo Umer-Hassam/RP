@@ -1,3 +1,43 @@
 // Place all the styles related to the WorkDurations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+
+.section {
+	font-size:13px;
+}
+.section .info {
+	float:left
+}
+.section .info_right {
+	float:right
+}
+.section .info_right a{
+	text-decoration:none;
+}
+.section .info_right a:hover {
+	color: rgb(52, 147, 179);
+}
+
+.section .row input {
+	width:60px
+}
+
+.section ol ul {
+	font-size:12px;
+}
+
+.section.actions {
+	padding:20px 0px 0px 0px;
+}
+.section.actions input {
+	height: 40px;
+    background: rgb(73, 137, 207);
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFF;
+    width: 50%;
+    float: right;
+}

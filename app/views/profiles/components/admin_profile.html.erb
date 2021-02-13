@@ -1,68 +1,169 @@
-<div class="admin_profile_container">
-	<div class="admin_profile_menu">
-		<ul>
-			<li><%= link_to "Create New Employee", new_profile_url(role:"employee") %></li>
-			<li><%= link_to "Create New Vendor", new_profile_url(role:"vendor") %></li>
-		</ul>
-	</div>
-	<div class="admin_profile_content"> 
-		<div class="admin_profile_content_heading">Vendors</div>
-		<div class="admin_profile_content_value">
-			<div class="admin_profile_vendor_row_top">
-				<div class="admin_profile_vendor_col">
-					Name
-				</div>
-				<div class="admin_profile_vendor_col">
-					Employees Assigned
-				</div>
-				<div class="admin_profile_vendor_col">
-					Billable Hours
-				</div>
-				<div style="clear:both"></div>
-			</div>
-			<% Vendor.all.each_with_index do |vendor, index| %>
 
-				<div class="admin_profile_vendor_row" style="background:<%= index % 2 == 0 ? "#EEE" : "#DDD" %>">
-				
-				<div class="admin_profile_vendor_col">
-					<%= link_to vendor.profile.full_name, vendor %>
-				</div>
-				<div class="admin_profile_vendor_col">
-					<%= vendor.employees.count %>
-				</div>
-				<div class="admin_profile_vendor_col">
-					<%= vendor.employees.collect { |x| x.weekly_hours_worked } %>
-					
-				</div>
-				<div style="clear:both"></div>
-			</div>
-			<% end%>
+<% weekly_hours = 0 %>
+<% weekly_charge = 0 %>
+<% Employee.all.each do |employee| %>
+	<% 
+	wh = employee.projects.map { |p| p.weekly_hours_worked.reject { |item| item.blank? }.reduce(&:+)  }.reduce(&:+) 
+	weekly_hours += wh == nil ? 0 : wh
+	%>
+<% end %>
+<div class="info_container">
+	<div class="row">
+		<div class="col">
+			<div class="ti_price"><%= Employee.all.count %></div>
+			<div class="ti_info">Total Employees</div>
+			<div class="clr"></div>
 		</div>
-		<div class="admin_profile_content_heading">Employees</div>
-		<div class="admin_profile_content_value">
-			<div class="admin_profile_vendor_row_top">
-				<div class="admin_profile_vendor_col">
-					Name
-				</div>
-				<div class="admin_profile_vendor_col">
-					Billable Hours
-				</div>
-				<div style="clear:both"></div>
-			</div>
-			<% Employee.where(:vendor_id => nil).each_with_index do |employee, index| %>
+		<div class="col">
+			<div class="ti_price"><%= weekly_hours %></div>
+			<div class="ti_info">Hours Logged</div>
+			<div class="clr"></div>
+		</div>
 
-				<div class="admin_profile_vendor_row" style="background:<%= index % 2 == 0 ? "#EEE" : "#DDD" %>">
-				
-				<div class="admin_profile_vendor_col">
-					<%= link_to employee.profile.full_name, employee %>
-				</div>
-				<div class="admin_profile_vendor_col">
-					<%= employee.weekly_hours_worked %>
-				</div>
-				<div style="clear:both"></div>
-			</div>
-			<% end%>
-		</div>
+		<div class="clr"></div>
 	</div>
-	<div style="clear:both"></div>
+	<div class="row">
+		<div class="col" style="width:100%">
+			<div class="bi_info">Total Weekly Charge</div>
+			<div class="bi_price">
+				<%= Employee.all.map {|e| e.projects.map {|p| p.weekly_earnings }.reduce(&:+) }.reject{|e|e.blank?}.reduce(&:+) %>$
+			</div>
+			<div class="clr"></div>
+		</div>
+
+		<div class="clr"></div>
+	</div>
+</div>
+
+<div class="info_container">
+	<div class="row">
+		<div class="col" style="width:90%">
+			<div class="ti_price">7</div>
+			<div class="ti_info">Active Job Posts</div>
+			<div class="clr"></div>
+		</div>
+
+		<div class="clr"></div>
+	</div>
+	<div class="row bottom_button">
+		<a href=""> View All Posts </a>
+	</div>
+</div>
+
+<div class="info_container">
+	<div class="row">
+		<div class="col" style="width:90%">
+			<div class="ti_price">62</div>
+			<div class="ti_info">Active Applicants</div>
+			<div class="clr"></div>
+		</div>
+
+		<div class="clr"></div>
+	</div>
+	<div class="row bottom_button">
+		<a href=""> View Applicantions </a>
+	</div>
+</div>
+
+<div class="clr"></div>
+
+<div class="info_container" style="width:100%">
+	<div class="row top_title">
+		<i class="material-icons" style="font-size:20px;color:#FFF;">announcement</i> Notifications
+	</div>
+	<div class="row">
+		<div class="col" style="width:90%">
+			<div class="ti_price">20</div>
+			<div class="ti_info">Total Employees</div>
+			<div class="clr"></div>
+		</div>
+
+		<div class="clr"></div>
+	</div>
+</div>
+
+<div class="clr"></div>
+
+<div class="heading" style="padding-bottom: 0px;"> Active Job Posts: </div>
+
+<div class="section" style="width: 100%;">
+	<div class="row top">
+		<div class="col" style="width:20px">
+			#
+		</div>
+		<div class="col" style="width: 60%;">
+			Post
+		</div>
+		<div class="col">
+			Applications
+		</div>
+		<div class="col">
+			Shotlists
+		</div>
+		<div style="clear:both"></div>
+	</div>
+
+	<div class="row">
+		<div class="col" style="width:20px">
+			1
+		</div>
+		<div class="col" style="width: 60%;">
+			<a href=""> Developer required at some place, please apply and let us know, thankyou. </a>
+		</div>
+		<div class="col">
+			30
+		</div>
+		<div class="col">
+			12
+		</div>
+		<div style="clear:both"></div>
+	</div>
+
+	<div class="row">
+		<div class="col" style="width:20px">
+			2
+		</div>
+		<div class="col" style="width: 60%;">
+			<a href=""> Microsoft Specialist required for a fortune 500 company, work remotely. thankyou. </a>
+		</div>
+		<div class="col">
+			23
+		</div>
+		<div class="col">
+			8
+		</div>
+		<div style="clear:both"></div>
+	</div>
+
+	<div class="row">
+		<div class="col" style="width:20px">
+			3
+		</div>
+		<div class="col" style="width: 60%;">
+			<a href=""> Developer required at some place, please apply and let us know, thankyou.  </a>
+		</div>
+		<div class="col">
+			3
+		</div>
+		<div class="col">
+			0
+		</div>
+		<div style="clear:both"></div>
+	</div>
+
+	<div class="row bottom">
+		<div class="col" style="width:20px">
+			
+		</div>
+		<div class="col" style="width: 60%;">
+			
+		</div>
+		<div class="col">
+			56
+		</div>
+		<div class="col">
+			20
+		</div>
+		<div style="clear:both"></div>
+	</div>
 </div>

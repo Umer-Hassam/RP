@@ -1,3 +1,6 @@
+
+<%if false %>
+
 <%= form_with(model: job_post, local: true) do |form| %>
   <% if job_post.errors.any? %>
     <div id="error_explanation">
@@ -24,4 +27,6 @@
   <div class="actions">
     <%= form.submit %>
   </div>
+<% end %>
+
 <% end %>

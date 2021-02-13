@@ -7,6 +7,12 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
   </head>
 
   <body>
@@ -16,15 +22,77 @@
         <ul>
 
           <% if user_signed_in? %>
-            <li> <%= link_to 'New Job Post', new_job_post_path %> </li>
-            <li> <%= link_to 'Logout', destroy_user_session_path, method: :delete %> </li>
+            <li> 
+              <a href="/job_posts/new">
+                <i class="material-icons" style="font-size:20px;color:#FFF;">note_add</i> 
+                <span> New Post </span>
+              </a> 
+            </li>
+            <li> 
+              <a rel="nofollow" data-method="delete" href="/users/sign_out">
+                <i class="material-icons" style="font-size:20px;color:#FFF;">logout</i> 
+                <span> Logout </span>
+              </a> 
+            </li>
           <% else %>
-            <li> <a href="/users/sign_in"> Login </a> </li>
+            <li> 
+              <a href="/users/sign_in"> 
+                <i class="material-icons" style="font-size:20px;color:#FFF;">login</i> 
+                <span> Login</span>
+              </a> 
+            </li>
           <% end %>
         </ul>
       </div>
       <div class="clr"></div>
     </div>
+    <div class="ap_container">
+
+      <% if user_signed_in? %>
+  <div class="menu">
+    <%if current_user.profile.role == "Admin" %>
+      <ul>
+        <li class="heading"><a> Job Posts </a></li>
+        <li class="option"> <a href="/job_posts"> View All Posts </a> </li>
+
+        <li class="heading"><a> Time Entry and Reports </a></li>
+        <li class="option"> <a href="/work_durations"> Weekly Time Card Report </a> </li>
+        <li class="option"> <a href=""> Weekly Expense Report </a> </li>
+        <li class="option"> <a href=""> View Imaged Expense Report </a> </li>
+        
+        <li class="heading"><a> Admin Options </a></li>
+        <li class="option"> <a href="/employees"> Manage Employees </a> </li>
+        <li class="option"> <a href="/vendors"> Manage Vendors </a> </li>
+        <li class="option"> <a href=""> Manage Employers </a> </li>
+
+        <li class="heading"><a> Personal Information </a></li>
+        <li class="option"> <a href=""> Edit Personal Information </a> </li>
+        <li class="option"> <a href=""> Edit Provided Documents </a> </li>
+      </ul>
+      <%elsif current_user.profile.role == "Employee" %>
+        <ul>
+          <li class="heading"><a> Main Menu </a></li>
+          <li class="option"> <a href="/work_durations/new"> Weekly Time Entry </a> </li>
+          <li class="option"> <a href="/vendors"> Vendor Information </a> </li>
+
+          <li class="heading"><a> Personal Information </a></li>
+          <li class="option"> <%= link_to 'Edit Personal Information', edit_employee_path(current_user.profile.employee) %> </li>
+          <li class="option"> <a href=""> Edit Provided Documents </a> </li>
+        </ul>
+      <% end %>
+  </div>
+    <% end %>
+
+<% if user_signed_in? %>
+  <div class="main" >
+    <% else %>
+    <div class="main" style="width:100%">
+    <% end %>
     <%= yield %>
+  </div>
+  <div style="clear:both"></div>
+
+</div>
+    
   </body>
 </html>

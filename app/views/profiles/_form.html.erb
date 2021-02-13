@@ -1,3 +1,50 @@
+ <%= form_with(model: profile, local: true) do |form| %>
+  <% if profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+      <ul>
+        <% profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="section" style="margin:0px">
+    <div class="row form_row top_title"> Create New Employee </div>
+    <div class="row form_row heading">
+      Personal Information
+    </div>
+    <div class="row form_row">
+      <div class="col title">Name: </div>
+      <div class="col field"> <%= form.text_field :full_name %></div>
+      <div class="clr"></div>
+    </div>
+
+    <div class="row form_row heading">
+      Login Information
+    </div>
+    <div class="row form_row">
+      <div class="col title">Email: </div>
+      <div class="col field"> <%= form.text_field :email %> </div>
+      <div class="clr"></div>
+    </div>
+    <div class="row form_row">
+      <div class="col title">Password: </div>
+      <div class="col field"> <%= form.text_field :password %> </div>
+      <div class="clr"></div>
+    </div>
+
+    <div class="row form_row" >
+      <%= form.hidden_field :user_type, { :value => Profile.role_id(params[:role]) } %>
+    </div>
+    <div class="row form_row bottom_button">
+      <%= form.submit %>
+    </div>
+  </div>
+<% end %>
+
+<%if false %>
 <%= form_with(model: profile, local: true) do |form| %>
   <% if profile.errors.any? %>
     <div id="error_explanation">
@@ -27,4 +74,6 @@
   <div class="actions">
     <%= form.submit %>
   </div>
+<% end %>
+
 <% end %>

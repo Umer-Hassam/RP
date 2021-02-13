@@ -6,4 +6,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  def is_admin? 
+  	return profile.role == "Admin"
+  end
+  def is_employee? 
+  	return profile.role == "Employee"
+  end
 end

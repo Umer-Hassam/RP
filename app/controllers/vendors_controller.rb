@@ -4,7 +4,14 @@ class VendorsController < ApplicationController
   # GET /vendors
   # GET /vendors.json
   def index
-    @vendors = Vendor.all
+    case current_user.profile.role
+    when "Admin"
+      @vendors = Vendor.all
+    when "Employee"
+      @vendors = current_user.profile.employee.vendors
+    else
+      @vendors = Vendor.all
+    end
   end
 
   # GET /vendors/1

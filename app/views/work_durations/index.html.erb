@@ -1,3 +1,169 @@
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+  // Load the Visualization API and the corechart package.
+  google.charts.load('current', {'packages':['corechart', 'bar']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.charts.setOnLoadCallback(drawChart);
+
+  // Callback that creates and populates a data table,
+  // instantiates the pie chart, passes in the data and
+  // draws it.
+  function drawChart() {
+
+    // Create the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Hours');
+    data.addRows([
+      <% Employee.all.each do |employee| %>
+      ['<%= employee.profile.full_name %>', <%= employee.projects.map{|p|p.total_weekly_hours_worked}.reduce(&:+).to_i %>],
+      <% end %>
+    ]);
+
+    // Set chart options
+    var options = {'title':'Weekly Hours Worked',
+                   'width':640,
+                   'height':195};
+
+    var options = {
+        title: 'Weekly Hours Worked',
+        chartArea: {width: '60%'},
+        hAxis: {
+          title: 'Hours worked',
+          minValue: 0
+        },
+        vAxis: {
+          title: 'Employee'
+        },
+        width: '640',
+        height: '195'
+      };
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>
+
+
+<div class="heading"> Weekly Time Card Report </div>
+
+<% weekly_hours = 0 %>
+<% weekly_charge = 0 %>
+<% Employee.all.each do |employee| %>
+  <% 
+  wh = employee.projects.map { |p| p.weekly_hours_worked.reject { |item| item.blank? }.reduce(&:+)  }.reduce(&:+) 
+  weekly_hours += wh == nil ? 0 : wh
+  %>
+<% end %>
+<div class="info_container">
+  <div class="row">
+    <div class="col">
+      <div class="ti_price"><%= Employee.all.count %></div>
+      <div class="ti_info">Total Employees</div>
+      <div class="clr"></div>
+    </div>
+    <div class="col">
+      <div class="ti_price"><%= weekly_hours %></div>
+      <div class="ti_info">Hours Logged</div>
+      <div class="clr"></div>
+    </div>
+
+    <div class="clr"></div>
+  </div>
+  <div class="row">
+    <div class="col" style="width:100%">
+      <div class="bi_info">Total Weekly Charge</div>
+      <div class="bi_price">
+        <%= Employee.all.map {|e| e.projects.map {|p| p.weekly_earnings }.reduce(&:+) }.reject{|e|e.blank?}.reduce(&:+) %>$
+      </div>
+      <div class="clr"></div>
+    </div>
+
+    <div class="clr"></div>
+  </div>
+</div>
+
+<div id="chart_div" style="margin-left:10px;float:left"></div>
+
+<div class="clr"></div>
+
+<div class="section">
+
+  <div class="row top">
+    <div class="col">
+      #
+    </div>
+    <div class="col">
+      Name
+    </div>
+    <div class="col">
+      Rate
+    </div>
+    <div class="col">
+      X
+    </div>
+    <div class="col">
+      Total Hours
+    </div>
+    <div class="col">
+      Turnover
+    </div>
+    <div style="clear:both"></div>
+  </div>
+  <% Employee.all.each do |employee| %>
+  <div class="row">
+    <div class="col">
+      1
+    </div>
+    <div class="col">
+      <%= employee.profile.full_name %>
+    </div>
+    <div class="col">
+      <%= employee.projects.map {|p|p.rate}.join(",") %>
+    </div>
+    <div class="col">
+      X
+    </div>
+    <div class="col">
+      <%= employee.projects.map {|p|p.total_weekly_hours_worked}.join(",") %>
+    </div>
+    <div class="col">
+      <%= employee.projects.map {|p|p.weekly_earnings}.reduce(&:+) %>
+    </div>
+    <div style="clear:both"></div>
+  </div>
+  <% end %>
+
+  <div class="row bottom">
+    <div class="col">
+      
+    </div>
+    <div class="col">
+      
+    </div>
+    <div class="col">
+      
+    </div>
+    <div class="col">
+      
+    </div>
+    <div class="col">
+      146
+    </div>
+    <div class="col">
+      240$
+    </div>
+    <div style="clear:both"></div>
+  </div>
+</div>
+
+
+<%if false %>
+
 <p id="notice"><%= notice %></p>
 
 <h1>Work Durations</h1>
@@ -29,3 +195,5 @@
 <br>
 
 <%= link_to 'New Work Duration', new_work_duration_path %>
+
+<% end %>

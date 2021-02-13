@@ -1,7 +1,9 @@
+<!--
 <p id="notice"><%= notice %></p>
 <p>
   <strong>Full name:</strong>
   <%= @profile.full_name.empty? ? "<not_provided> " : @profile.full_name %> (<%= @profile.role %>) 
   <%= link_to 'Edit', edit_profile_path(@profile) %>
 </p>
+-->
 <%= render template: "profiles/components/admin_profile" %>
