@@ -108,7 +108,6 @@ a:hover {
 .nav_bar_menu a {
 	display: block;
 	text-decoration: none;
-    height:100%;
     padding: 18px;
 }
 .nav_bar_menu a:hover {
