@@ -1,18 +1,4 @@
-<style>
-	.col {
-		width:12.5% !important;
-	}
-	.inner_menu {
-		padding:10px;
-	}
-	.inner_menu a{
-		padding: 10px;
-	    color: #FFF;
-	    font-weight: bold;
-	    text-decoration: none;
-	    background-color: rgb(73, 137, 207);
-	}
-</style>
+
 <p id="notice"><%= notice %></p>
 
 <div class="inner_menu">
@@ -47,13 +33,13 @@
 <div class="section">
 	
   <div class="row top">
-    <div class="col">
+    <div class="col col125">
       Vendor
     </div>
 
 
     <% for day in (today.at_beginning_of_week..today.at_end_of_week).map.each { |day| day } do %>
-    <div class="col">
+    <div class="col col125">
       <%= day.strftime("%a %d") %>
     </div>
     <% end %>
@@ -64,11 +50,11 @@
 
   	<% proj_id = @employee.projects.where(:vendor_id => vendor.id).first.id %>
 	  <div class="row">
-	    <div class="col">
+	    <div class="col col125">
 	      <%= vendor.profile.full_name %>
 	    </div>
 	    <% for day in (today.at_beginning_of_week..today.at_end_of_week).map.each { |day| day } do %>
-	    <div class="col">
+	    <div class="col col125">
 	      <% wd = WorkDuration.where(work_day:day, project_id:proj_id) %>
 	      <% if wd.count > 0 %>
       		<%= wd.first.hours %>

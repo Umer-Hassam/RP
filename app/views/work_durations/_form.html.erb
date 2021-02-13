@@ -1,11 +1,3 @@
-
-<style>
-  form{
-    padding: 0px;
-    width: 100%;
-    margin: 0 auto;
-  }
-</style>
 <%= form_with(model: work_duration, local: true) do |form| %>
   <% if work_duration.errors.any? %>
     <div id="error_explanation">
