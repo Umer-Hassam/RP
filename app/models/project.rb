@@ -27,7 +27,7 @@ class Project < ApplicationRecord
   	end
 
     def weekly_earnings
-      return total_weekly_hours_worked * rate
+      return total_weekly_hours_worked != nil ? total_weekly_hours_worked * rate : 0
     end
     def total_weekly_hours_worked 
       return weekly_hours_worked.reject { |item| item.blank? }.reduce(&:+)

@@ -3,7 +3,10 @@
 <% weekly_charge = 0 %>
 <% Employee.all.each do |employee| %>
 	<% 
-	wh = employee.projects.map { |p| p.weekly_hours_worked.reject { |item| item.blank? }.reduce(&:+)  }.reduce(&:+) 
+	
+	wh = employee.projects.map {  |p| p.weekly_hours_worked.reject { |item| item.blank? }
+	.reduce(&:+) }.reject { |item| item.blank? }.reduce(&:+) 
+
 	weekly_hours += wh == nil ? 0 : wh
 	%>
 <% end %>

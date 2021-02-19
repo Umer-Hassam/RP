@@ -46,7 +46,7 @@
       </div>
       <div class="col">
         <%if employee.vendors.count > 0 %>
-          <%= th = employee.projects.map { |p| p.total_weekly_hours_worked }.reduce(&:+).to_i %>
+          <%= th = employee.projects.map { |p| p.total_weekly_hours_worked }.reject { |item| item.blank? }.reduce(&:+).to_i %>
           <% total_hours += th %>
         <% end %>
       </div>

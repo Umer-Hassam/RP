@@ -25,7 +25,8 @@
 					<%= link_to employee.profile.full_name, employee %>
 				</div>
 				<div class="admin_profile_vendor_col">
-					<%= employee.weekly_hours_worked %>
+					<%# employee.weekly_hours_worked .reject { |item| item.blank? }%>
+
 				</div>
 				<div style="clear:both"></div>
 			</div>

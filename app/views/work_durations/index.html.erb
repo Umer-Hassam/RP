@@ -19,7 +19,7 @@
     data.addColumn('number', 'Hours');
     data.addRows([
       <% Employee.all.each do |employee| %>
-      ['<%= employee.profile.full_name %>', <%= employee.projects.map{|p|p.total_weekly_hours_worked}.reduce(&:+).to_i %>],
+      ['<%= employee.profile.full_name %>', <%= employee.projects.map{|p|p.total_weekly_hours_worked}.reject { |item| item.blank? }.reduce(&:+).to_i %>],
       <% end %>
     ]);
 
@@ -55,7 +55,7 @@
 <% weekly_charge = 0 %>
 <% Employee.all.each do |employee| %>
   <% 
-  wh = employee.projects.map { |p| p.weekly_hours_worked.reject { |item| item.blank? }.reduce(&:+)  }.reduce(&:+) 
+  wh = employee.projects.map { |p| p.weekly_hours_worked.reject { |item| item.blank? }.reduce(&:+)  }.reject { |item| item.blank? }.reduce(&:+).to_i 
   weekly_hours += wh == nil ? 0 : wh
   %>
 <% end %>
